@@ -48,3 +48,7 @@
 - 2. 实现webViewChromeClient.onShowCustomView方法，该方法是webview全屏时被调用的方法, 方法具体内容参考代码
 - 3. 实现webViewChromeClient.onShowCustomView方法，该方法是webview退出全屏时被调用的方法，方法具体内容参考代码
 - 4. 设置webViewClient防止使用浏览器打开
+
+## demo
+
+[apk](https://github.com/klouskingsley/android_webview_video/releases/download/1.0/app-debug-demo.apk)
