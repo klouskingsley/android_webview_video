@@ -1,3 +1,9 @@
+# 安卓webview视频播放全屏处理示例
+
+
+## AndroidManifest设置
+
+```
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.harry.myapplication">
@@ -32,3 +38,13 @@
     </application>
 
 </manifest>
+```
+
+## activity处理
+
+对activity主要进行了一下处理
+
+- 1. 设置webViewChromeClient
+- 2. 实现webViewChromeClient.onShowCustomView方法，该方法是webview全屏时被调用的方法, 方法具体内容参考代码
+- 3. 实现webViewChromeClient.onShowCustomView方法，该方法是webview退出全屏时被调用的方法，方法具体内容参考代码
+- 4. 设置webViewClient防止使用浏览器打开
