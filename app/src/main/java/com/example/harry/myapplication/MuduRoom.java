@@ -1,7 +1,10 @@
 package com.example.harry.myapplication;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -18,6 +22,11 @@ import android.webkit.WebViewClient;
 public class MuduRoom extends AppCompatActivity {
 
     private final String TAG = "MuduRoom";
+
+    // webview上传文件临时变量存储
+    public ValueCallback<Uri[]> filePathCallback;
+    public static final int FILECHOOSER_RESULTCODE_FOR_ANDROID_5 = 5174;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +96,24 @@ public class MuduRoom extends AppCompatActivity {
                 // 设置屏幕为竖屏
                 curActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
+
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                // android5.0+ webview上传文件实现， 参考：https://juejin.im/post/585a4d0b128fe1006b906f16
+                if (((MuduRoom) curActivity).filePathCallback != null) {
+                    ((MuduRoom) curActivity).filePathCallback.onReceiveValue(null);
+                    ((MuduRoom) curActivity).filePathCallback = null;
+                }
+                ((MuduRoom) curActivity).filePathCallback = filePathCallback;
+                Intent intent = fileChooserParams.createIntent();
+                try {
+                    ((MuduRoom) curActivity).startActivityForResult(intent, FILECHOOSER_RESULTCODE_FOR_ANDROID_5);
+                } catch (ActivityNotFoundException e) {
+                    ((MuduRoom) curActivity).filePathCallback = null;
+                    return false;
+                }
+                return true;
+            }
         });
 
         // 设置WebViewClient，防止使用浏览器打开
@@ -128,5 +155,16 @@ public class MuduRoom extends AppCompatActivity {
 
         // 取消屏幕常亮
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // 接收文件上传消息
+        if (requestCode == FILECHOOSER_RESULTCODE_FOR_ANDROID_5) {
+            if (filePathCallback == null) return;
+            filePathCallback.onReceiveValue(WebChromeClient.FileChooserParams.parseResult(resultCode, data));
+            filePathCallback = null;
+        }
     }
 }
