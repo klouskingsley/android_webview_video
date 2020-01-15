@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">视频webview嵌入测试</string>
     <string name="default_url">http://mudu.tv/watch/4301650</string>
-    <string name="button_text">点击进入</string>
-    <string name="input_hint">视频地址</string>
+<!--    <string name="default_url">https://googlechrome.github.io/samples/media/playback-rate-exception</string>-->
+<!--    <string name="default_url">http://test.mudu.tv:8080/watch/170951137</string>-->
+    <string name="button_text">点击进入1</string>
+    <string name="input_hint">视频地址1</string>
+
 </resources>
