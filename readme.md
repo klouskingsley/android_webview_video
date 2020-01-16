@@ -232,5 +232,4 @@ AndroidManifest.xml
 
 
 ## demo
-
-[apk](https://github.com/klouskingsley/android_webview_video/releases/download/1.0/app-debug-demo.apk)
+[apk](https://github.com/klouskingsley/android_webview_video/releases/download/1.2/app-debug.apk)
