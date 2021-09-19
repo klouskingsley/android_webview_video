@@ -31,7 +31,7 @@
 
         <!--webview所在activity需要设置configChanges-->
         <activity
-            android:name=".MuduRoom"
+            android:name=".webview.MuduRoom"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
     </application>
